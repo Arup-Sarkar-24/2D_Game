@@ -3,22 +3,33 @@ package main;
 import input.KeyboardInputs;
 import input.MouseInputs;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+//import java.util.Random;
 
 public class GamePanel extends JPanel {
 
     private MouseInputs mouseInputs;
     private float xDelta =100f, yDelta=100f;
-    private float xDir =0.5f, yDir =0.5f;
-    private Color color = new Color(150,20,90);
-    private Random random;
+    private BufferedImage img, subImg;
+
+    //remove xDir, yDir, Random, color
+    //private float xDir =0.5f, yDir =0.5f;
+    //private Color color = new Color(150,20,90);
+    //private Random random;
 
     public GamePanel(){
 
-        random = new Random();
+        //random = new Random();
         mouseInputs = new MouseInputs(this);
+        
+        importImg();
+        
+        setPanelSize();
         addKeyListener(new KeyboardInputs(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
@@ -26,6 +37,23 @@ public class GamePanel extends JPanel {
 
         Timer timer = new Timer(16, e -> repaint()); // ~60 FPS
         timer.start();
+    }
+
+    private void importImg() {
+        InputStream is = getClass().getResourceAsStream("/player_sprites.png");
+        try {
+            img = ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+            //throw new RuntimeException(e);
+        }
+    }
+
+    public void setPanelSize(){
+        Dimension size = new Dimension(900,700);
+        setMinimumSize(size);
+        setPreferredSize(size);
+        setMaximumSize(size);
     }
 
     public void changleXDelta(int value){
@@ -43,16 +71,21 @@ public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        
+
+        subImg = img.getSubimage(1*64,8*40,64,40);
+        g.drawImage(subImg,(int)xDelta,(int)yDelta,128,80,null);
+
+        /*
+        //remove the rectangle
         updateRectangle();
         g.setColor(color);
         g.fillRect((int) xDelta,(int) yDelta,200,50);
 
-
-
-
+         */
     }
 
+    /*
+    //remove rectangle update
     private void updateRectangle() {
         xDelta+= xDir;
         if (xDelta <= 0 || xDelta + 200 >= 400){
@@ -67,11 +100,17 @@ public class GamePanel extends JPanel {
         }
     }
 
+     */
+
+    /*
+    //remove color update
     private Color getRandColor() {
         int r = random.nextInt(256); // 0–255 inclusive
         int g = random.nextInt(256);
         int b = random.nextInt(256);
         return new Color(r, g, b);
     }
+
+     */
 
 }
