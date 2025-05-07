@@ -2,7 +2,7 @@ package main;
 
 public class MainClass {
     public static void main(String[] args) {
-         new Game();
+         Game game =new Game();
        // System.out.println("I am alive!");
     }
 }
