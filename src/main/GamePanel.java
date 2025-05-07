@@ -15,7 +15,9 @@ public class GamePanel extends JPanel {
 
     private MouseInputs mouseInputs;
     private float xDelta =100f, yDelta=100f;
-    private BufferedImage img, subImg;
+    private BufferedImage img /*,subImg*/;//removing sum img
+    private BufferedImage[] idleAni;
+    private int aniTick, aniIndex, aniSpeed = 15;
 
     //remove xDir, yDir, Random, color
     //private float xDir =0.5f, yDir =0.5f;
@@ -28,6 +30,7 @@ public class GamePanel extends JPanel {
         mouseInputs = new MouseInputs(this);
         
         importImg();
+        loadAnimations();
         
         setPanelSize();
         addKeyListener(new KeyboardInputs(this));
@@ -35,8 +38,18 @@ public class GamePanel extends JPanel {
         addMouseMotionListener(mouseInputs);
         setFocusable(true);
 
+        /*
         Timer timer = new Timer(16, e -> repaint()); // ~60 FPS
         timer.start();
+         */
+    }
+
+    private void loadAnimations() {
+        idleAni = new BufferedImage[5];
+
+        for (int i = 0; i < idleAni.length; i++){
+            idleAni[i] = img.getSubimage(i*64,0,64,40);
+        }
     }
 
     private void importImg() {
@@ -71,9 +84,12 @@ public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+        
+        updateAnimationTick();
 
-        subImg = img.getSubimage(1*64,8*40,64,40);
-        g.drawImage(subImg,(int)xDelta,(int)yDelta,128,80,null);
+        //subImg = img.getSubimage(1*64,8*40,64,40);
+        //g.drawImage(subImg,(int)xDelta,(int)yDelta,128,80,null);
+        g.drawImage(idleAni[aniIndex],(int)xDelta,(int)yDelta,128,80,null);
 
         /*
         //remove the rectangle
@@ -82,6 +98,16 @@ public class GamePanel extends JPanel {
         g.fillRect((int) xDelta,(int) yDelta,200,50);
 
          */
+    }
+
+    private void updateAnimationTick() {
+        aniTick++;
+        if (aniTick >= aniSpeed){
+            aniTick = 0;
+            aniIndex++;
+            if (aniTick >= idleAni.length)
+                aniIndex=0;
+        }
     }
 
     /*
