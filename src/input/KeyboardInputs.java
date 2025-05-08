@@ -22,20 +22,16 @@ public class KeyboardInputs implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()){
             //for up movement
-            case KeyEvent.VK_W-> gamePanel.setDirection(UP);
-            case KeyEvent.VK_UP-> gamePanel.setDirection(UP);
+            case KeyEvent.VK_W , KeyEvent.VK_T , KeyEvent.VK_I , KeyEvent.VK_8, KeyEvent.VK_UP -> gamePanel.setDirection(UP);
 
             //for down movement
-            case KeyEvent.VK_X-> gamePanel.setDirection(DOWN);
-            case KeyEvent.VK_DOWN -> gamePanel.setDirection(DOWN);
+            case KeyEvent.VK_X , KeyEvent.VK_B , KeyEvent.VK_M , KeyEvent.VK_2 , KeyEvent.VK_DOWN -> gamePanel.setDirection(DOWN);
 
-            //for right movement
-            case KeyEvent.VK_A-> gamePanel.setDirection(RIGHT);
-            case KeyEvent.VK_LEFT-> gamePanel.setDirection(RIGHT);
+            //for Left movement
+            case KeyEvent.VK_A , KeyEvent.VK_F , KeyEvent.VK_J , KeyEvent.VK_4 , KeyEvent.VK_LEFT-> gamePanel.setDirection(LEFT);
 
-            //for left movement
-            case KeyEvent.VK_D-> gamePanel.setDirection(LEFT);
-            case KeyEvent.VK_RIGHT-> gamePanel.setDirection(LEFT);
+            //for Right movement
+            case KeyEvent.VK_D , KeyEvent.VK_H , KeyEvent.VK_L , KeyEvent.VK_6 , KeyEvent.VK_RIGHT-> gamePanel.setDirection(RIGHT);
 
         }
     }
@@ -44,16 +40,11 @@ public class KeyboardInputs implements KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()){
 
-            case KeyEvent.VK_W :
-            case KeyEvent.VK_UP :
-            case KeyEvent.VK_X :
-            case KeyEvent.VK_DOWN :
-            case KeyEvent.VK_A :
-            case KeyEvent.VK_LEFT :
-            case KeyEvent.VK_D :
-            case KeyEvent.VK_RIGHT :
-                gamePanel.setMoving(false);
-                break;
+            case KeyEvent.VK_W, KeyEvent.VK_T, KeyEvent.VK_I, KeyEvent.VK_8, KeyEvent.VK_UP,
+                 KeyEvent.VK_X, KeyEvent.VK_B, KeyEvent.VK_M, KeyEvent.VK_2, KeyEvent.VK_DOWN,
+                 KeyEvent.VK_A, KeyEvent.VK_F, KeyEvent.VK_J, KeyEvent.VK_4, KeyEvent.VK_LEFT,
+                 KeyEvent.VK_D, KeyEvent.VK_H, KeyEvent.VK_L, KeyEvent.VK_6, KeyEvent.VK_RIGHT -> gamePanel.setMoving(false);
+
         }
     }
 }

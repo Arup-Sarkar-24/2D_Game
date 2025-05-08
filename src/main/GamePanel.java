@@ -100,21 +100,23 @@ public class GamePanel extends JPanel {
     public void updatePos(){
         if (moving){
             switch (playerDir){
-                case LEFT -> xDelta += 5;
-                case RIGHT -> xDelta -= 5;
+                case LEFT -> xDelta -= 5;
+                case RIGHT -> xDelta += 5;
                 case UP -> yDelta -= 5;
                 case DOWN -> yDelta += 5;
             }
         }
     }
 
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
+    public void updateGame(){
         updateAnimationTick();
-        
         setAnimation();
         updatePos();
-        
+    }
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+
         g.drawImage(animations[playerAction][aniIndex],(int)xDelta,(int)yDelta,128,80,null);
     }
 }
